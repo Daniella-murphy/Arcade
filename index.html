@@ -14,9 +14,9 @@
     <button onclick="startGameSession()">Start Game Session</button>
     
     <div id="gameButtons" style="display:none;">
-        <button onclick="playBNH()">Play Bear Ninja Hunter</button>
         <button onclick="playMagicEightBall()">Play Magic Eight Ball</button>
         <button onclick="playSalesCommission()">Play Sales Commission</button>
+        <button onclick="playUnitToPercent()">Play Unit to Percent Calculator</button>
     </div>
 
     <div id="results"></div>
@@ -34,48 +34,6 @@
             } else {
                 alert(`Welcome to the Arcade, ${playerName}!`);
                 document.getElementById('gameButtons').style.display = 'block';
-            }
-        }
-
-        // Bear Ninja Hunter Game Function (Declaration)
-        function playBNH() {
-            let choices = ["Bear", "Ninja", "Hunter"];
-            let playAgain;
-
-            do {
-                let playerChoice = prompt("Please enter Bear, Ninja, or Hunter:");
-                if (!playerChoice) {
-                    alert("Invalid input. Please enter Bear, Ninja, or Hunter.");
-                    continue;
-                }
-                playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1).toLowerCase();
-
-                if (!choices.includes(playerChoice)) {
-                    alert("Invalid input. Please enter Bear, Ninja, or Hunter.");
-                    continue;
-                }
-
-                let computerChoice = choices[Math.floor(Math.random() * choices.length)];
-
-                let resultMessage = `You chose ${playerChoice}. The computer chose ${computerChoice}. `;
-                if (playerChoice === computerChoice) {
-                    resultMessage += "It's a tie!";
-                } else if (
-                    (playerChoice === "Bear" && computerChoice === "Ninja") ||
-                    (playerChoice === "Ninja" && computerChoice === "Hunter") ||
-                    (playerChoice === "Hunter" && computerChoice === "Bear")
-                ) {
-                    resultMessage += `${playerName} wins!`;
-                } else {
-                    resultMessage += "The computer wins!";
-                }
-
-                alert(resultMessage);
-                playAgain = prompt(`${playerName}, Would you like to keep playing this game? y/n`).toLowerCase();
-            } while (playAgain === 'y');
-
-            if (playAgain === 'n') {
-                pickAnotherGame();
             }
         }
 
@@ -161,6 +119,24 @@
             }
         }
 
+        // Unit to Percent Calculator Game Function (Arrow)
+        const playUnitToPercent = () => {
+            let A = parseInt(prompt('Enter the weight of Part A.'));
+            A = Math.floor(Math.random() * 30) + 1;
+            let B = parseInt(prompt('Enter the weight of Part B.'));
+            B = Math.floor(Math.random() * 30) + 1;
+            let W = A + B;
+            let percentPartA = (A / W) * 100;
+            let percentPartB = (B / W) * 100;
+
+            let result = `<table>`;
+            result += `<tr><th>Total Weight</th><th>Part A</th><th>Part B</th></tr>`;
+            result += `<tr><td>${W}</td><td>${percentPartA.toFixed(2)}%</td><td>${percentPartB.toFixed(2)}%</td></tr>`;
+            result += `</table>`;
+
+            document.getElementById('results').innerHTML = result;
+        }
+
         // Function to prompt user to pick another game
         function pickAnotherGame() {
             let playAnotherGame = prompt(`${playerName}, Would you like to pick another game to play? y/n`).toLowerCase();
@@ -172,6 +148,7 @@
                     <button onclick="location.reload();">Restart</button>
                 `;
             }
+        }
     </script>
 </body>
 </html>
