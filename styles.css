@@ -1,21 +1,27 @@
 body {
+    background: linear-gradient(135deg, #ff4081, #ff80ab, #ea80fc, #b388ff, #8c9eff, #82b1ff, #80d8ff, #84ffff, #a7ffeb, #b9f6ca, #ccff90, #ffff8d, #ff9e80);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
     font-family: Arial, sans-serif;
-    background-color: #f0f0f0;
-    text-align: center;
-    padding: 20px;
+    color: #333;
+}
+
+@keyframes gradientAnimation {
+    0% {background-position: 0% 50%;}
+    50% {background-position: 100% 50%;}
+    100% {background-position: 0% 50%;}
 }
 
 h1 {
-    color: #444;
+    text-align: center;
+    margin-top: 50px;
+    color: #fff;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 }
 
-form, #results, #gameButtons {
-    background-color: #fff;
-    padding: 20px;
-    margin: 0 auto;
-    width: 300px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+p {
+    text-align: center;
+    color: #fff;
 }
 
 button {
