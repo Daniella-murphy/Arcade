@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Arcade Games</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+  
+<body>
+  
+    <h1>Welcome to the Arcade!</h1>
+    <p>Please enter your name to start:</p>
+    <input type="text" id="playerName">
+    <button onclick="startGameSession()">Start Game Session</button>
+    
+    <div id="gameButtons" style="display:none;">
+        <button onclick="playBNH()">Play Bear Ninja Hunter</button>
+        <button onclick="playMagicEightBall()">Play Magic Eight Ball</button>
+        <button onclick="playSalesCommission()">Play Sales Commission</button>
+    </div>
+
+    <div id="results"></div>
+
+    <script>
+        // Declare variables
+        let playerName = '';
+        let gameSessionActive = false;
+
+        // Function to start the game session (Declaration)
+        function startGameSession() {
+            playerName = document.getElementById('playerName').value;
+            if (playerName.trim() === "") {
+                alert("Please enter your name to start the game session.");
+            } else {
+                alert(`Welcome to the Arcade, ${playerName}!`);
+                document.getElementById('gameButtons').style.display = 'block';
+            }
+        }
+
+        // Bear Ninja Hunter Game Function (Declaration)
+        function playBNH() {
+            let choices = ["Bear", "Ninja", "Hunter"];
+            let playAgain;
+
+            do {
+                let playerChoice = prompt("Please enter Bear, Ninja, or Hunter:");
+                if (!playerChoice) {
+                    alert("Invalid input. Please enter Bear, Ninja, or Hunter.");
+                    continue;
+                }
+                playerChoice = playerChoice.charAt(0).toUpperCase() + playerChoice.slice(1).toLowerCase();
+
+                if (!choices.includes(playerChoice)) {
+                    alert("Invalid input. Please enter Bear, Ninja, or Hunter.");
+                    continue;
+                }
+
+                let computerChoice = choices[Math.floor(Math.random() * choices.length)];
+
+                let resultMessage = `You chose ${playerChoice}. The computer chose ${computerChoice}. `;
+                if (playerChoice === computerChoice) {
+                    resultMessage += "It's a tie!";
+                } else if (
+                    (playerChoice === "Bear" && computerChoice === "Ninja") ||
+                    (playerChoice === "Ninja" && computerChoice === "Hunter") ||
+                    (playerChoice === "Hunter" && computerChoice === "Bear")
+                ) {
+                    resultMessage += `${playerName} wins!`;
+                } else {
+                    resultMessage += "The computer wins!";
+                }
+
+                alert(resultMessage);
+                playAgain = prompt(`${playerName}, Would you like to keep playing this game? y/n`).toLowerCase();
+            } while (playAgain === 'y');
+
+            if (playAgain === 'n') {
+                pickAnotherGame();
+            }
+        }
+
+        // Magic Eight Ball Game Function (Arrow)
+        const playMagicEightBall = () => {
+            const responses = [
+                "Yes, absolutely!",
+                "No, certainly not.",
+                "It is certain.",
+                "Outlook not so good.",
+                "Ask again later.",
+                "Don't count on it.",
+                "Signs point to yes.",
+                "Very doubtful."
+            ];
+            let playAgain;
+
+            do {
+                let question = prompt("Ask your question:");
+                if (question) {
+                    const randomIndex = Math.floor(Math.random() * responses.length);
+                    const response = responses[randomIndex];
+                    alert(`Answer: ${response}`);
+
+                    playAgain = prompt(`${playerName}, Would you like to keep playing this game? y/n`).toLowerCase();
+                }
+            } while (playAgain === 'y');
+
+            if (playAgain === 'n') {
+                pickAnotherGame();
+            }
+        }
+
+        // Sales Commission Calculator Game Function (Expression)
+        const playSalesCommission = function() {
+            let sales = [];
+            let sale, totalSales = 0, commissionRate = 0, commission = 0, totalEarnings = 0;
+            let playAgain;
+
+            do {
+                while (true) {
+                    sale = prompt("Enter sale amount in dollars and cents (e.g., 123.45) or type 'Done' to finish:");
+                    if (sale.toLowerCase() === "done") break;
+                    if (sale === null || sale.trim() === "") {
+                        alert("Invalid input. Please enter a valid dollar amount.");
+                        continue;
+                    }
+                    let saleAmount = parseFloat(sale);
+                    if (!isNaN(saleAmount) && saleAmount >= 0) {
+                        sales.push(saleAmount);
+                    } else {
+                        alert("Invalid input. Please enter a valid dollar amount.");
+                    }
+                }
+                
+                totalSales = sales.reduce((a, b) => a + b, 0);
+
+                if (totalSales > 0) {
+                    if (totalSales < 500) {
+                        commissionRate = 0.05;
+                    } else if (totalSales < 1000) {
+                        commissionRate = 0.10;
+                    } else {
+                        commissionRate = 0.15;
+                    }
+                } else {
+                    commissionRate = 0;
+                }
+
+                commission = totalSales * commissionRate;
+                totalEarnings = totalSales + commission;
+
+                alert(`Hello ${playerName}, Here is your Weekly Commission Report.\n` +
+                    `Your sales total is $${totalSales.toFixed(2)}, so your commission rate is ${(commissionRate * 100).toFixed(2)}%.\n` +
+                    `Your total commission is $${commission.toFixed(2)}.\n` +
+                    `Your total earnings are $${totalEarnings.toFixed(2)}.`);
+
+                playAgain = prompt(`${playerName}, Would you like to keep playing this game? y/n`).toLowerCase();
+            } while (playAgain === 'y');
+
+            if (playAgain === 'n') {
+                pickAnotherGame();
+            }
+        }
+
+        // Function to prompt user to pick another game
+        function pickAnotherGame() {
+            let playAnotherGame = prompt(`${playerName}, Would you like to pick another game to play? y/n`).toLowerCase();
+            if (playAnotherGame === 'y') {
+                document.getElementById('gameButtons').style.display = 'block';
+            } else if (playAnotherGame === 'n') {
+                document.getElementById('results').innerHTML = `
+                    <p>Thank you for playing at the Arcade, ${playerName}! We hope to see you again soon.</p>
+                    <button onclick="location.reload();">Restart</button>
+                `;
+            }
+    </script>
+</body>
+</html>
